@@ -13,6 +13,38 @@
   transform: translateY(-10px);
 }
 
+/* Hero section branding */
+.hero-branding {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.techgrounds-logo {
+  height: 60px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  filter: brightness(0) invert(1);
+}
+
+.techgrounds-logo:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Responsive logo sizing */
+@media (max-width: 768px) {
+  .techgrounds-logo {
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .techgrounds-logo {
+    height: 40px;
+  }
+}
+
 /* Level selection improvements */
 .level-selection {
   padding: 2rem 0;

@@ -5,6 +5,18 @@ const HomePage: React.FC = () => {
     <div className="home-page">
       <section className="hero-section">
         <div className="hero-content">
+          <div className="hero-branding">
+            <img 
+              src="/techgrounds-logo.svg" 
+              alt="Techgrounds" 
+              className="techgrounds-logo"
+              style={{
+                height: '60px',
+                marginBottom: '24px',
+                filter: 'brightness(0) invert(1)'
+              }}
+            />
+          </div>
           <h1>Welkom bij AI Leerplatform</h1>
           <p className="hero-description">
             Ontdek hoe je AI-systemen veilig en ethisch kunt gebruiken, en leer de kunst van effectief prompten. 
