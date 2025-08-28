@@ -1,14 +1,21 @@
-name: Deploy to GitHub Pages
+name: Build and Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
     branches: [ main ]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
     - name: Checkout
@@ -18,38 +25,23 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: './ai-veiligheid-exercises/package-lock.json'
         
     - name: Install dependencies
-      run: |
-        cd ai-veiligheid-exercises
-        npm ci
+      working-directory: ./ai-veiligheid-exercises
+      run: npm ci
         
-    - name: Build project
-      run: |
-        cd ai-veiligheid-exercises
-        npm run build:gh-pages
-        
+    - name: Build
+      working-directory: ./ai-veiligheid-exercises
+      run: npm run build:gh-pages
+      
     - name: Setup Pages
       uses: actions/configure-pages@v4
       
-    - name: Upload artifact
+    - name: Upload Pages artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: './ai-veiligheid-exercises/dist'
+        path: ./ai-veiligheid-exercises/dist
         
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
-
-# Permissions needed for GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow one concurrent deployment
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
