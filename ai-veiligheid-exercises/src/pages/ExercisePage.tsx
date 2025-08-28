@@ -301,7 +301,6 @@ const ExercisePage: React.FC = () => {
   const [showExercises, setShowExercises] = useState(false)
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0)
   const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([])
-  const [showFeedback, setShowFeedback] = useState(false)
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([])
   const [isCompleted, setIsCompleted] = useState(false)
   const [score, setScore] = useState(0)
@@ -335,7 +334,6 @@ const ExercisePage: React.FC = () => {
 
   useEffect(() => {
     setSelectedAnswers([])
-    setShowFeedback(false)
   }, [currentExerciseIndex])
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
@@ -450,25 +448,11 @@ const ExercisePage: React.FC = () => {
     }, 200)
   }
 
-  const nextExercise = () => {
-    setFadeClass('fade-out')
-    
-    setTimeout(() => {
-      if (currentExerciseIndex < levelExercises.length - 1) {
-        setCurrentExerciseIndex(prev => prev + 1)
-      } else {
-        setIsCompleted(true)
-      }
-      setFadeClass('fade-in')
-    }, 200)
-  }
-
   const resetExercises = () => {
     setCurrentExerciseIndex(0)
     setUserAnswers([])
     setScore(0)
     setIsCompleted(false)
-    setShowFeedback(false)
     setSelectedAnswers([])
   }
 

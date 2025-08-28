@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import './App.css'
 import HomePage from './pages/HomePage'
@@ -53,7 +53,7 @@ function App() {
   const shouldShowHeader = !isEmbedded && !hideHeader
 
   return (
-    <Router>
+    <Router basename={import.meta.env.DEV ? '/' : '/Techgrounds.playgrounds2.0'}>
       <div className={`app ${isEmbedded ? 'embedded' : ''}`}>
         {shouldShowHeader && (
           <header className="app-header">

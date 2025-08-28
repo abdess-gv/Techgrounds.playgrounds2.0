@@ -24,19 +24,20 @@ const EmbedGenerator: React.FC = () => {
 
   const generateEmbedCode = () => {
     const baseUrl = window.location.origin
-    let iframeSrc = `${baseUrl}/exercises` // default fallback
+    const basePath = import.meta.env.DEV ? '' : '/Techgrounds.playgrounds2.0'
+    let iframeSrc = `${baseUrl}${basePath}/exercises` // default fallback
     let courseTitle = 'AI Learning Platform'
     
     // Determine the correct base URL and title based on course selection
     if (config.course === 'prompt-engineering') {
-      iframeSrc = `${baseUrl}/prompt-exercises`
+      iframeSrc = `${baseUrl}${basePath}/prompt-exercises`
       courseTitle = 'Prompt Engineering Oefeningen'
     } else if (config.course === 'ai-safety') {
-      iframeSrc = `${baseUrl}/exercises`
+      iframeSrc = `${baseUrl}${basePath}/exercises`
       courseTitle = 'AI Veiligheid & Ethische Overwegingen'
     } else {
       // If no specific course selected, show a more general title
-      iframeSrc = `${baseUrl}/exercises`
+      iframeSrc = `${baseUrl}${basePath}/exercises`
       courseTitle = 'AI Learning Platform'
     }
     
@@ -210,11 +211,12 @@ const EmbedGenerator: React.FC = () => {
           <div className="iframe-container" style={{width: config.width === '100%' ? '100%' : config.width, height: config.height}}>
             <iframe
               src={(() => {
-                let baseSrc = '/exercises'
+                const basePath = import.meta.env.DEV ? '' : '/Techgrounds.playgrounds2.0'
+                let baseSrc = `${basePath}/exercises`
                 if (config.course === 'prompt-engineering') {
-                  baseSrc = '/prompt-exercises'
+                  baseSrc = `${basePath}/prompt-exercises`
                 } else if (config.course === 'ai-safety') {
-                  baseSrc = '/exercises'
+                  baseSrc = `${basePath}/exercises`
                 }
                 
                 const params = new URLSearchParams()
