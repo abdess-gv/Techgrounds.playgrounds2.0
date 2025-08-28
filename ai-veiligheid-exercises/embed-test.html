@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Safety Exercises - Embed Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        
+        .description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+        
+        .embed-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            border: 1px solid #e9ecef;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        
+        .controls h3 {
+            width: 100%;
+            text-align: center;
+            margin: 0 0 1rem 0;
+            color: #495057;
+            font-size: 1.1rem;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 0.5rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .iframe-container {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        #ai-exercises-iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            display: block;
+        }
+        
+        .log-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .log-container {
+            max-height: 300px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        
+        .log-entry {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .log-entry:last-child {
+            margin-bottom: 0;
+        }
+        
+        .log-header {
+            font-weight: bold;
+            color: #dc3545;
+            margin-bottom: 0.5rem;
+        }
+        
+        .status {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid #c3e6cb;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .embed-section,
+            .log-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ AI Learning Platform - Enhanced Embedding Test</h1>
+        <p class="description">
+            This page demonstrates the enhanced embedding functionality where you can choose between specific courses (AI Safety OR Prompt Engineering) with individual level selection.
+            <strong>New:</strong> Separate course selection with dedicated level options per course.
+            Use the controls below to test different embedding scenarios.
+        </p>
+        
+        <div class="status" id="status">
+            ✅ Ready to test embedding functionality
+        </div>
+        
+        <div class="embed-section">
+            <h2>Live Embed Demo</h2>
+            <div class="controls">
+                <h3>AI Veiligheid & Ethiek</h3>
+                <button class="btn btn-primary" onclick="loadBasic()">Basic (Niveau Selectie)</button>
+                <button class="btn btn-primary" onclick="loadBeginner()">Direct Beginner</button>
+                <button class="btn btn-primary" onclick="loadIntermediate()">Direct Intermediate</button>
+                <button class="btn btn-primary" onclick="loadAdvanced()">Direct Advanced</button>
+            </div>
+            
+            <div class="controls">
+                <h3>Prompt Engineering</h3>
+                <button class="btn btn-secondary" onclick="loadPromptBasic()">Basic (Niveau Selectie)</button>
+                <button class="btn btn-secondary" onclick="loadPromptBeginner()">Direct Beginner</button>
+                <button class="btn btn-secondary" onclick="loadPromptIntermediate()">Direct Intermediate</button>
+                <button class="btn btn-secondary" onclick="loadPromptAdvanced()">Direct Advanced</button>
+            </div>
+            
+            <div class="controls">
+                <h3>Test Functies</h3>
+                <button class="btn btn-outline" onclick="requestResize()">Request Resize</button>
+                <button class="btn btn-outline" onclick="clearLog()">Clear Log</button>
+            </div>
+            
+            <div class="iframe-container">
+                <iframe 
+                    id="ai-exercises-iframe"
+                    src="http://localhost:5176/exercises?hideHeader=true"
+                    title="AI Safety Exercises">
+                </iframe>
+            </div>
+        </div>
+        
+        <div class="log-section">
+            <h2>Communication Log</h2>
+            <p>Messages received from the embedded iframe:</p>
+            <div class="log-container" id="log-container">
+                <p style="text-align: center; color: #999; font-style: italic;">
+                    No messages yet. Interact with the embedded exercises to see communication in action.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let messageCount = 0;
+        
+        // Listen for messages from iframe
+        window.addEventListener('message', function(event) {
+            console.log('Received message:', event.data);
+            logMessage(event.data);
+            
+            // Handle resize responses
+            if (event.data.type === 'RESIZE_RESPONSE') {
+                const iframe = document.getElementById('ai-exercises-iframe');
+                if (iframe) {
+                    iframe.style.height = event.data.height + 'px';
+                    updateStatus(`✅ Iframe resized to ${event.data.height}px`);
+                }
+            }
+            
+            // Handle progress updates
+            if (event.data.type === 'EXERCISE_PROGRESS') {
+                updateStatus(`📊 Progress update received: ${JSON.stringify(event.data.data)}`);
+            }
+            
+            // Handle ready message
+            if (event.data.type === 'AI_EXERCISES_READY') {
+                updateStatus('✅ AI Exercises loaded and ready');
+                setTimeout(requestResize, 1000);
+            }
+        });
+        
+        function logMessage(message) {
+            const logContainer = document.getElementById('log-container');
+            
+            // Remove "no messages" placeholder
+            if (messageCount === 0) {
+                logContainer.innerHTML = '';
+            }
+            
+            messageCount++;
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `
+                <div class="log-header">[${new Date().toLocaleTimeString()}] ${message.type}</div>
+                <pre>${JSON.stringify(message, null, 2)}</pre>
+            `;
+            
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+        
+        function updateStatus(message) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.style.background = '#d4edda';
+            status.style.color = '#155724';
+            status.style.borderColor = '#c3e6cb';
+        }
+        
+        function loadBasic() {
+            const iframe = document.getElementById('ai-exercises-iframe');
+            iframe.src = 'http://localhost:5176/exercises?hideHeader=true';
+            updateStatus('🔄 Loading AI Safety exercises (user level selection)...');
+        }
+        
+        function loadBeginner() {
+            const iframe = document.getElementById('ai-exercises-iframe');
+            iframe.src = 'http://localhost:5176/exercises?level=beginner&hideHeader=true';
+            updateStatus('🔄 Loading AI Safety - beginner level (direct)...');
+        }
+        
+        function loadIntermediate() {
+            const iframe = document.getElementById('ai-exercises-iframe');
+            iframe.src = 'http://localhost:5176/exercises?level=intermediate&hideHeader=true';
+            updateStatus('🔄 Loading AI Safety - intermediate level (direct)...');
+        }
+        
+        function loadAdvanced() {
+            const iframe = document.getElementById('ai-exercises-iframe');
+            iframe.src = 'http://localhost:5176/exercises?level=advanced&hideHeader=true';
+            updateStatus('🔄 Loading AI Safety - advanced level (direct)...');
+        }
+        
+        function loadPromptBasic() {
+            const iframe = document.getElementById('ai-exercises-iframe');
+            iframe.src = 'http://localhost:5176/prompt-exercises?hideHeader=true';
+            updateStatus('🔄 Loading Prompt Engineering exercises (user level selection)...');
+        }
+        
+        function loadPromptBeginner() {
+            const iframe = document.getElementById('ai-exercises-iframe');
+            iframe.src = 'http://localhost:5176/prompt-exercises?level=beginner&hideHeader=true';
+            updateStatus('🔄 Loading Prompt Engineering - beginner level (direct)...');
+        }
+        
+        function loadPromptIntermediate() {
+            const iframe = document.getElementById('ai-exercises-iframe');
+            iframe.src = 'http://localhost:5176/prompt-exercises?level=intermediate&hideHeader=true';
+            updateStatus('🔄 Loading Prompt Engineering - intermediate level (direct)...');
+        }
+        
+        function loadPromptAdvanced() {
+            const iframe = document.getElementById('ai-exercises-iframe');
+            iframe.src = 'http://localhost:5176/prompt-exercises?level=advanced&hideHeader=true';
+            updateStatus('🔄 Loading Prompt Engineering - advanced level (direct)...');
+        }
+        
+        function requestResize() {
+            const iframe = document.getElementById('ai-exercises-iframe');
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage({ type: 'RESIZE_REQUEST' }, '*');
+                updateStatus('📏 Resize request sent...');
+            }
+        }
+        
+        function clearLog() {
+            const logContainer = document.getElementById('log-container');
+            logContainer.innerHTML = `
+                <p style="text-align: center; color: #999; font-style: italic;">
+                    No messages yet. Interact with the embedded exercises to see communication in action.
+                </p>
+            `;
+            messageCount = 0;
+            updateStatus('🗑️ Log cleared');
+        }
+        
+        // Initial resize request
+        setTimeout(() => {
+            requestResize();
+        }, 2000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embedded AI Veiligheid Oefeningen - Voorbeeld</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        .iframe-container {
+            position: relative;
+            height: 600px;
+            border: none;
+        }
+        .exercise-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .status {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+        .status h3 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+        .status p {
+            margin: 0;
+            color: #666;
+        }
+        .progress-info {
+            display: flex;
+            gap: 2rem;
+            margin-top: 0.5rem;
+        }
+        .progress-item {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Leerplatform - AI Veiligheid Oefeningen</h1>
+            <p>Voorbeeld van embedded oefeningen</p>
+        </div>
+        
+        <div class="iframe-container">
+            <iframe 
+                id="exerciseFrame"
+                class="exercise-iframe" 
+                src="http://localhost:5173"
+                title="AI Veiligheid Oefeningen">
+            </iframe>
+        </div>
+        
+        <div class="status">
+            <h3>Status</h3>
+            <p id="statusText">Oefeningen worden geladen...</p>
+            <div class="progress-info">
+                <div class="progress-item">
+                    <strong>Niveau:</strong> <span id="currentLevel">-</span>
+                </div>
+                <div class="progress-item">
+                    <strong>Stap:</strong> <span id="currentStep">-</span>
+                </div>
+                <div class="progress-item">
+                    <strong>Score:</strong> <span id="currentScore">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Listen for messages from the iframe
+        window.addEventListener('message', function(event) {
+            // In production, you should validate event.origin
+            const { type, data } = event.data;
+            
+            switch (type) {
+                case 'EXERCISE_READY':
+                    document.getElementById('statusText').textContent = 'Oefeningen zijn klaar! Kies een niveau om te beginnen.';
+                    break;
+                    
+                case 'EXERCISE_PROGRESS':
+                    document.getElementById('currentLevel').textContent = data.selectedLevel || 'Geen niveau geselecteerd';
+                    
+                    let stepText = 'Onbekend';
+                    switch (data.step) {
+                        case 'level_selection':
+                            stepText = 'Niveau selectie';
+                            break;
+                        case 'level_selected':
+                            stepText = 'Niveau geselecteerd';
+                            break;
+                        case 'exercises':
+                            stepText = 'Bezig met oefeningen';
+                            break;
+                    }
+                    document.getElementById('currentStep').textContent = stepText;
+                    
+                    if (data.showExercises) {
+                        document.getElementById('statusText').textContent = 'Student is bezig met de oefeningen...';
+                    } else if (data.selectedLevel) {
+                        document.getElementById('statusText').textContent = 'Niveau geselecteerd. Wacht op start van oefeningen.';
+                    }
+                    break;
+                    
+                case 'EXERCISE_COMPLETE':
+                    document.getElementById('statusText').textContent = 
+                        `Oefeningen voltooid! Score: ${data.score}/${data.total} (${data.percentage}%)`;
+                    document.getElementById('currentScore').textContent = 
+                        `${data.score}/${data.total} (${data.percentage}%)`;
+                    
+                    // You could send this data to your learning management system
+                    console.log('Exercise completed:', data);
+                    break;
+            }
+        });
+        
+        // Optional: Send configuration to the iframe
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const iframe = document.getElementById('exerciseFrame');
+                // You could send configuration data if needed
+                iframe.contentWindow.postMessage({
+                    type: 'CONFIG',
+                    data: {
+                        theme: 'default',
+                        language: 'nl'
+                    }
+                }, '*');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
