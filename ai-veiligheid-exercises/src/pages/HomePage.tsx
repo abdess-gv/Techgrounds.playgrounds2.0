@@ -127,6 +127,10 @@ const HomePage: React.FC = () => {
               <span>🎯</span>
               Prompt Engineering
             </Link>
+            <Link to="/prompt-database" className="btn btn-outline btn-large">
+              <span>🗃️</span>
+              Prompt Database
+            </Link>
             <Link to="/embed" className="btn btn-outline btn-large">
               <span>🔗</span>
               Embed Generator

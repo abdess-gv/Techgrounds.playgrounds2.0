@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 // Exercise types and interfaces
-export type ExerciseType = 'multiple-choice' | 'multiple-select'
+export type ExerciseType = 'multiple-choice' | 'multiple-select' | 'drag-drop' | 'scenario-analysis' | 'case-study'
 
 export interface Exercise {
   id: string
@@ -13,6 +13,17 @@ export interface Exercise {
   options: string[]
   correctAnswer: string | string[]
   explanation: string
+  scenario?: {
+    situation: string
+    stakeholders: string[]
+    considerations: string[]
+  }
+  caseStudy?: {
+    company: string
+    background: string
+    challenge: string
+    outcome: string
+  }
 }
 
 export interface ExerciseSet {
@@ -92,6 +103,91 @@ const exercises: ExerciseSet = {
       ],
       correctAnswer: ['Om fouten en bias te kunnen ontdekken', 'Om vertrouwen van gebruikers te behouden', 'Om juridische verantwoording af te kunnen leggen', 'Om aan regelgeving te voldoen'],
       explanation: 'Transparantie is cruciaal voor vertrouwen, controle, juridische verantwoording en compliance. Het helpt niet om AI sneller te maken, maar wel om het beter en ethischer te maken.'
+    },
+    {
+      id: 'data-consent-basic-1',
+      title: 'Data Toestemming & Permissies',
+      question: 'Je bent leraar en wilt AI gebruiken om studentenwerk te beoordelen. Welke stappen moet je nemen?',
+      type: 'multiple-select',
+      options: [
+        'Toestemming vragen van studenten (en ouders bij minderjarigen)',
+        'De school informeren over het gebruik van AI',
+        'Persoonlijke gegevens uit de teksten verwijderen',
+        'Gewoon beginnen omdat het onderwijs ten goede komt',
+        'Een privacy impact assessment uitvoeren'
+      ],
+      correctAnswer: ['Toestemming vragen van studenten (en ouders bij minderjarigen)', 'De school informeren over het gebruik van AI', 'Persoonlijke gegevens uit de teksten verwijderen', 'Een privacy impact assessment uitvoeren'],
+      explanation: 'In onderwijscontexten zijn extra voorzorgsmaatregelen nodig. Je moet toestemming hebben, transparant zijn naar de instelling, data anonimiseren en privacy-risicos beoordelen.'
+    },
+    {
+      id: 'ai-security-basic-1',
+      title: 'AI Beveiliging Basisprincipes',
+      question: 'Welke beveiligingsmaatregelen zijn essentieel bij het werken met AI-systemen?',
+      type: 'multiple-select',
+      options: [
+        'Sterke wachtwoorden voor AI-platforms',
+        'Regelmatige updates van AI-software',
+        'Twee-factor authenticatie waar mogelijk',
+        'AI-modellen delen via publieke platforms',
+        'Back-ups maken van belangrijke AI-configuraties',
+        'Toegangsrechten beperken tot noodzakelijke personen'
+      ],
+      correctAnswer: ['Sterke wachtwoorden voor AI-platforms', 'Regelmatige updates van AI-software', 'Twee-factor authenticatie waar mogelijk', 'Back-ups maken van belangrijke AI-configuraties', 'Toegangsrechten beperken tot noodzakelijke personen'],
+      explanation: 'AI-beveiliging vereist dezelfde fundamentele maatregelen als andere systemen: sterke authenticatie, updates, toegangscontrole en back-ups. Het delen van modellen op publieke platforms brengt beveiligingsrisicos met zich mee.'
+    },
+    {
+      id: 'children-ai-basic-1',
+      title: 'AI en Kinderen - Bescherming',
+      question: 'Een school wil AI gebruiken voor gepersonaliseerd leren. Welke extra beschermingsmaatregelen zijn nodig voor kinderen?',
+      type: 'multiple-select',
+      options: [
+        'Ouderlijke toestemming voor alle data-verwerking',
+        'Leeftijdsgeschikt design van AI-interfaces',
+        'Extra strenge data minimalisatie',
+        'Transparante uitleg over AI-gebruik aan kinderen',
+        'Kinderen kunnen zelf beslissen over hun data',
+        'Bescherming tegen manipulatieve AI-technieken'
+      ],
+      correctAnswer: ['Ouderlijke toestemming voor alle data-verwerking', 'Leeftijdsgeschikt design van AI-interfaces', 'Extra strenge data minimalisatie', 'Transparante uitleg over AI-gebruik aan kinderen', 'Bescherming tegen manipulatieve AI-technieken'],
+      explanation: 'Kinderen verdienen extra bescherming in AI-systemen: ouderlijke toestemming, leeftijdsgeschikt design, minimale dataverzameling, transparante communicatie en bescherming tegen manipulatie.'
+    },
+    {
+      id: 'ai-misinformation-basic-1',
+      title: 'AI en Desinformatie Herkenning',
+      question: 'Hoe herken je mogelijk door AI gegenereerde desinformatie?',
+      type: 'multiple-select',
+      options: [
+        'Onnatuurlijk perfecte tekst zonder fouten',
+        'Ontbrekende bronvermelding of verificatie',
+        'Emotioneel geladen taal bedoeld om te manipuleren',
+        'Inconsistenties in details of cijfers',
+        'Alles wat door AI is gemaakt is automatisch desinformatie',
+        'Te specifieke details die moeilijk te controleren zijn'
+      ],
+      correctAnswer: ['Onnatuurlijk perfecte tekst zonder fouten', 'Ontbrekende bronvermelding of verificatie', 'Emotioneel geladen taal bedoeld om te manipuleren', 'Inconsistenties in details of cijfers', 'Te specifieke details die moeilijk te controleren zijn'],
+      explanation: 'AI-gegenereerde desinformatie kan verschillende signalen hebben: onnatuurlijke perfectie, gebrek aan bronnen, manipulatieve taal, inconsistenties en niet-verifieerbare details. Niet alle AI-content is echter desinformatie.'
+    },
+    {
+      id: 'workplace-ai-basic-1',
+      title: 'AI op de Werkplek - Ethische Basisregels',
+      question: 'Je werkgever introduceert AI-tools voor productiviteit. Welke ethische overwegingen zijn belangrijk?',
+      type: 'case-study',
+      caseStudy: {
+        company: 'TechCorp',
+        background: 'Een middelgroot technologiebedrijf implementeert AI-tools voor emailfiltering, vergadersamenvattingen en documentcreatie.',
+        challenge: 'Werknemers maken zich zorgen over privacy, baanzekerheid en transparantie.',
+        outcome: 'Het bedrijf moet balans vinden tussen efficiëntie en werknemersrechten.'
+      },
+      options: [
+        'Transparantie over welke AI-tools worden gebruikt',
+        'Training aanbieden voor nieuwe AI-tools',
+        'Duidelijke richtlijnen voor AI-gebruik',
+        'AI-tools implementeren zonder overleg',
+        'Privacy impact assessment uitvoeren',
+        'Feedback mechanismen voor werknemers instellen'
+      ],
+      correctAnswer: ['Transparantie over welke AI-tools worden gebruikt', 'Training aanbieden voor nieuwe AI-tools', 'Duidelijke richtlijnen voor AI-gebruik', 'Privacy impact assessment uitvoeren', 'Feedback mechanismen voor werknemers instellen'],
+      explanation: 'Ethische AI-implementatie op de werkplek vereist transparantie, training, duidelijke richtlijnen, privacy bescherming en werknemersparticipatie. Implementatie zonder overleg ondermijnt vertrouwen.'
     }
   ],
   intermediate: [
@@ -169,6 +265,62 @@ const exercises: ExerciseSet = {
       ],
       correctAnswer: ['Controleren of de AI consistent is in vergelijkbare gevallen', 'Analyseren of de buurten correleren met beschermde kenmerken', 'Onderzoeken of er alternative, minder discriminerende methodes zijn', 'Beoordelen of de criteria relevant zijn voor kredietwaardigheid'],
       explanation: 'Eerlijkheid in AI vereist consistentie, non-discriminatie, relevantie en het zoeken naar minder discriminerende alternatieven. Bedrijfsresultaten zijn niet relevant voor eerlijkheid.'
+    },
+    {
+      id: 'ai-risk-assessment-1',
+      title: 'AI Risico Assessment Framework',
+      question: 'Een bedrijf wil AI implementeren voor HR-beslissingen. Welke risico-categorieën moeten worden geëvalueerd?',
+      context: 'Het systeem zal worden gebruikt voor screening van CV\'s, interview scoring, en promotie-aanbevelingen.',
+      type: 'multiple-select',
+      options: [
+        'Technische risicos (model accuracy, data quality)',
+        'Ethische risicos (bias, fairness, discriminatie)',
+        'Juridische risicos (compliance met arbeidsrecht)',
+        'Operationele risicos (menselijke oversight, transparantie)',
+        'Financiële risicos (cost-benefit alleen)',
+        'Reputatie risicos (maatschappelijke acceptatie)',
+        'Privacy risicos (data protection, GDPR compliance)'
+      ],
+      correctAnswer: ['Technische risicos (model accuracy, data quality)', 'Ethische risicos (bias, fairness, discriminatie)', 'Juridische risicos (compliance met arbeidsrecht)', 'Operationele risicos (menselijke oversight, transparantie)', 'Reputatie risicos (maatschappelijke acceptatie)', 'Privacy risicos (data protection, GDPR compliance)'],
+      explanation: 'Comprehensive AI risk assessment vereist evaluatie van technische, ethische, juridische, operationele, reputatie en privacy risicos. Financiële overwegingen alleen zijn onvoldoende voor verantwoorde AI-implementatie.'
+    },
+    {
+      id: 'workplace-ai-monitoring-1',
+      title: 'AI-Monitoring op de Werkplek',
+      question: 'Een bedrijf wil AI gebruiken om productiviteit van werknemers te monitoren. Welke ethische overwegingen zijn cruciaal?',
+      type: 'scenario-analysis',
+      scenario: {
+        situation: 'Het management wil AI-tools implementeren die keystroke patterns, email sentiment, en meeting participation analyseren om productiviteit scores te genereren.',
+        stakeholders: ['Werknemers', 'Management', 'HR-afdeling', 'Vakbonden', 'Privacy officer'],
+        considerations: ['Werknemer privacy en autonomie', 'Transparantie over monitoring', 'Impact op werksfeer en vertrouwen', 'Nauwkeurigheid van AI-metrieken', 'Alternative performance indicators']
+      },
+      options: [
+        'Volledige transparantie naar werknemers over wat wordt gemonitord',
+        'Opt-out mogelijkheden voor werknemers',
+        'Reguliere audit van de AI-algoritmes voor bias',
+        'Beperk monitoring tot werkgerelateerde activiteiten alleen',
+        'Implementeren zonder werknemers te informeren voor objectiviteit',
+        'Gebruik alleen voor positive coaching, niet voor disciplinaire maatregelen'
+      ],
+      correctAnswer: ['Volledige transparantie naar werknemers over wat wordt gemonitord', 'Opt-out mogelijkheden voor werknemers', 'Reguliere audit van de AI-algoritmes voor bias', 'Beperk monitoring tot werkgerelateerde activiteiten alleen', 'Gebruik alleen voor positive coaching, niet voor disciplinaire maatregelen'],
+      explanation: 'Ethische AI-monitoring vereist transparantie, consent, scope beperking, bias audits en constructieve toepassing. Geheime monitoring ondermijnt vertrouwen en autonomie van werknemers.'
+    },
+    {
+      id: 'enterprise-ai-governance-1',
+      title: 'Enterprise AI Governance Strategie',
+      question: 'Een middelgroot bedrijf (500+ werknemers) wil een AI governance framework implementeren. Welke governance structuren zijn essentieel?',
+      type: 'multiple-select',
+      options: [
+        'AI Ethics Committee met diverse stakeholders',
+        'Chief AI Officer (CAIO) of vergelijkbare senior rol',
+        'AI Impact Assessment procedures voor nieuwe projecten',
+        'Employee AI training en awareness programma\'s',
+        'Incident response procedures voor AI failures',
+        'AI-specifieke procurement en vendor assessment criteria',
+        'Performance monitoring en regular auditing processes'
+      ],
+      correctAnswer: ['AI Ethics Committee met diverse stakeholders', 'Chief AI Officer (CAIO) of vergelijkbare senior rol', 'AI Impact Assessment procedures voor nieuwe projecten', 'Employee AI training en awareness programma\'s', 'Incident response procedures voor AI failures', 'AI-specifieke procurement en vendor assessment criteria', 'Performance monitoring en regular auditing processes'],
+      explanation: 'Effectieve enterprise AI governance vereist organisatorische structuren (ethics committee, CAIO), processen (impact assessments, audits), training, en procedures voor vendor management en incident response.'
     }
   ],
   advanced: [
@@ -254,6 +406,46 @@ const exercises: ExerciseSet = {
       ],
       correctAnswer: ['LIME (Local Interpretable Model-agnostic Explanations) voor lokale uitleg', 'SHAP (SHapley Additive exPlanations) voor feature importance', 'Attention mechanisms voor relevante input highlighting', 'Counterfactual explanations voor alternatieve scenarios', 'Rule extraction voor begrijpbare decision trees'],
       explanation: 'Verschillende stakeholders hebben verschillende explainability behoeften. Een combinatie van technieken (LIME, SHAP, attention, counterfactuals, rule extraction) biedt de beste coverage. Model simplificatie kan de performance te veel schaden.'
+    },
+    {
+      id: 'advanced-supply-chain-1',
+      title: 'AI Supply Chain Security',
+      question: 'Een organisatie gebruikt third-party AI models en datasets. Welke supply chain security maatregelen zijn kritiek?',
+      context: 'De organisatie maakt gebruik van open-source models, commercial APIs, en externe datasets voor hun AI-toepassingen.',
+      type: 'multiple-select',
+      options: [
+        'Model provenance tracking en attestation',
+        'Security audit van third-party AI vendors',
+        'Data lineage documentation en validation',
+        'Model poisoning attack detectie',
+        'Intellectual property clearance voor alle AI assets',
+        'Vendor risk assessment inclusief geopolitical risks',
+        'Fallback procedures bij vendor availability issues'
+      ],
+      correctAnswer: ['Model provenance tracking en attestation', 'Security audit van third-party AI vendors', 'Data lineage documentation en validation', 'Model poisoning attack detectie', 'Intellectual property clearance voor alle AI assets', 'Vendor risk assessment inclusief geopolitical risks', 'Fallback procedures bij vendor availability issues'],
+      explanation: 'AI supply chain security vereist comprehensive due diligence: model provenance, vendor audits, data lineage, attack detection, IP clearance, geopolitical risk assessment, en continuity planning.'
+    },
+    {
+      id: 'advanced-cross-border-1',
+      title: 'Cross-Border AI Governance',
+      question: 'Een multinational implementeert AI-systemen die persoonlijke data verwerken in de EU, VS, en Azië. Welke juridische uitdagingen moeten worden geadresseerd?',
+      type: 'scenario-analysis',
+      scenario: {
+        situation: 'Een global e-commerce platform gebruikt AI voor fraud detection, personalisatie, en customer service, waarbij data van gebruikers uit verschillende jurisdicties wordt verwerkt.',
+        stakeholders: ['EU residents (GDPR)', 'US customers (state privacy laws)', 'Asian users (various local regulations)', 'Data Protection Authorities', 'Local regulators'],
+        considerations: ['Data transfer mechanisms', 'Jurisdictional compliance conflicts', 'User rights harmonization', 'Regulatory reporting requirements', 'Cross-border incident response']
+      },
+      options: [
+        'Implementeer adequacy decisions en Standard Contractual Clauses voor EU transfers',
+        'Ontwikkel jurisdiction-specific AI governance policies',
+        'Establish local data residency waar vereist door wet',
+        'Harmoniseer user consent mechanisms across regions',
+        'Create unified incident response procedures voor alle jurisdicties',
+        'Gebruik één globaal privacy beleid voor alle regio\'s',
+        'Implementeer regionaal differentiated AI model deployment'
+      ],
+      correctAnswer: ['Implementeer adequacy decisions en Standard Contractual Clauses voor EU transfers', 'Ontwikkel jurisdiction-specific AI governance policies', 'Establish local data residency waar vereist door wet', 'Harmoniseer user consent mechanisms across regions', 'Create unified incident response procedures voor alle jurisdicties', 'Implementeer regionaal differentiated AI model deployment'],
+      explanation: 'Cross-border AI governance vereist juridische transfer mechanismen, jurisdictie-specifieke policies, data residency compliance, geharmoniseerde consent, unified incident response, en regionaal gedifferentieerde deployment. Een one-size-fits-all aanpak volstaat niet.'
     }
   ]
 }
@@ -583,7 +775,7 @@ const ExercisePage: React.FC = () => {
             <div className="progress-fill" style={{ width: `${progress}%` }}></div>
           </div>
 
-          <div className="exercise-content">
+          <div className="exercise-content" data-type={currentExercise.type}>
             <h2>{currentExercise.title}</h2>
             <div className="exercise-question">
               {currentExercise.question}
@@ -593,6 +785,54 @@ const ExercisePage: React.FC = () => {
               <div className="exercise-context">
                 <h4>Context:</h4>
                 <p>{currentExercise.context}</p>
+              </div>
+            )}
+
+            {currentExercise.scenario && (
+              <div className="exercise-scenario">
+                <h4>Scenario:</h4>
+                <div className="scenario-details">
+                  <div className="scenario-situation">
+                    <h5>Situatie:</h5>
+                    <p>{currentExercise.scenario.situation}</p>
+                  </div>
+                  <div className="scenario-stakeholders">
+                    <h5>Stakeholders:</h5>
+                    <ul>
+                      {currentExercise.scenario.stakeholders.map((stakeholder, index) => (
+                        <li key={index}>{stakeholder}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="scenario-considerations">
+                    <h5>Overwegingen:</h5>
+                    <ul>
+                      {currentExercise.scenario.considerations.map((consideration, index) => (
+                        <li key={index}>{consideration}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {currentExercise.caseStudy && (
+              <div className="exercise-case-study">
+                <h4>Case Study: {currentExercise.caseStudy.company}</h4>
+                <div className="case-study-details">
+                  <div className="case-section">
+                    <h5>Achtergrond:</h5>
+                    <p>{currentExercise.caseStudy.background}</p>
+                  </div>
+                  <div className="case-section">
+                    <h5>Uitdaging:</h5>
+                    <p>{currentExercise.caseStudy.challenge}</p>
+                  </div>
+                  <div className="case-section">
+                    <h5>Gewenste Uitkomst:</h5>
+                    <p>{currentExercise.caseStudy.outcome}</p>
+                  </div>
+                </div>
               </div>
             )}
 

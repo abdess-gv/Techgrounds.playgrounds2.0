@@ -4,6 +4,7 @@ import './App.css'
 import HomePage from './pages/HomePage'
 import ExercisePage from './pages/ExercisePage'
 import PromptExercisePage from './pages/PromptExercisePage'
+import PromptDatabase from './pages/PromptDatabase'
 import EmbedGenerator from './components/EmbedGenerator'
 import EmbedExamplePage from './pages/EmbedExamplePage'
 
@@ -74,6 +75,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/exercises" element={<ExercisePage />} />
             <Route path="/prompt-exercises" element={<PromptExercisePage />} />
+            <Route path="/prompt-database" element={<PromptDatabase />} />
             <Route path="/embed" element={<EmbedGenerator />} />
             <Route path="/embed/example" element={<EmbedExamplePage />} />
           </Routes>
