@@ -1,8 +1,18 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-// Exercise types and interfaces
-export type ExerciseType = 'multiple-choice' | 'multiple-select' | 'drag-drop' | 'scenario-analysis' | 'case-study'
+  // Exercise types and interfaces
+  export type ExerciseType = 'multiple-choice' | 'multiple-select' | 'drag-drop' | 'scenario-analysis' | 'case-study'
+
+  // User answer interface for tracking quiz results
+  interface UserAnswer {
+    questionId: string
+    question: string
+    userSelectedAnswers: string[]
+    correctAnswer: string | string[]
+    isCorrect: boolean
+    explanation: string
+  }
 
 export interface Exercise {
   id: string
@@ -120,36 +130,47 @@ const exercises: ExerciseSet = {
       explanation: 'In onderwijscontexten zijn extra voorzorgsmaatregelen nodig. Je moet toestemming hebben, transparant zijn naar de instelling, data anonimiseren en privacy-risicos beoordelen.'
     },
     {
-      id: 'ai-security-basic-1',
-      title: 'AI Beveiliging Basisprincipes',
-      question: 'Welke beveiligingsmaatregelen zijn essentieel bij het werken met AI-systemen?',
-      type: 'multiple-select',
+      id: 'ai-ethics-dilemma-1',
+      title: 'AI Ethisch Dilemma - Besluitvorming',
+      question: 'Een AI-systeem voor medische diagnoses heeft een accuratesse van 95%, maar maakt systematisch fouten bij patiënten van bepaalde etnische achtergronden. Wat is de meest ethische aanpak?',
+      type: 'scenario-analysis',
+      scenario: {
+        situation: 'Het ziekenhuis heeft een AI-diagnosesysteem dat over het algemeen zeer accuraat is, maar onderzoek toont aan dat het 15% minder betrouwbaar is voor patiënten van niet-westerse afkomst.',
+        stakeholders: ['Patiënten', 'Artsen', 'Ziekenhuismanagement', 'AI-ontwikkelaars', 'Ethische commissie'],
+        considerations: ['Patiëntveiligheid en gelijke behandeling', 'Beschikbaarheid van alternatieve diagnostische methoden', 'Tijdsinvestering voor verbetering van het systeem', 'Juridische en ethische verantwoordelijkheden', 'Impact op werkbelasting van artsen']
+      },
       options: [
-        'Sterke wachtwoorden voor AI-platforms',
-        'Regelmatige updates van AI-software',
-        'Twee-factor authenticatie waar mogelijk',
-        'AI-modellen delen via publieke platforms',
-        'Back-ups maken van belangrijke AI-configuraties',
-        'Toegangsrechten beperken tot noodzakelijke personen'
+        'Het systeem blijven gebruiken omdat 95% accuratesse beter is dan geen AI',
+        'Het systeem onmiddellijk stopzetten tot het bias-probleem is opgelost',
+        'Artsen waarschuwen voor de bias en extra voorzichtigheid vragen bij bepaalde patiëntengroepen',
+        'Een hybride aanpak: AI gebruiken waar het betrouwbaar is, traditionele methoden waar bias bestaat',
+        'Nieuwe trainingsdata verzamelen om de bias te corrigeren terwijl het systeem in gebruik blijft'
       ],
-      correctAnswer: ['Sterke wachtwoorden voor AI-platforms', 'Regelmatige updates van AI-software', 'Twee-factor authenticatie waar mogelijk', 'Back-ups maken van belangrijke AI-configuraties', 'Toegangsrechten beperken tot noodzakelijke personen'],
-      explanation: 'AI-beveiliging vereist dezelfde fundamentele maatregelen als andere systemen: sterke authenticatie, updates, toegangscontrole en back-ups. Het delen van modellen op publieke platforms brengt beveiligingsrisicos met zich mee.'
+      correctAnswer: ['Het systeem onmiddellijk stopzetten tot het bias-probleem is opgelost', 'Een hybride aanpak: AI gebruiken waar het betrouwbaar is, traditionele methoden waar bias bestaat'],
+      explanation: 'In medische contexten is gelijke behandeling cruciaal. Het systeem volledig stopzetten of een hybride aanpak zijn ethisch verantwoord. Het systeem blijven gebruiken zonder aanpassingen zou discriminatie in de zorg betekenen.'
     },
     {
-      id: 'children-ai-basic-1',
-      title: 'AI en Kinderen - Bescherming',
-      question: 'Een school wil AI gebruiken voor gepersonaliseerd leren. Welke extra beschermingsmaatregelen zijn nodig voor kinderen?',
-      type: 'multiple-select',
+      id: 'ai-workplace-surveillance-1',
+      title: 'AI Werkplek Surveillance - Case Study',
+      question: 'Analyseer deze situatie en bepaal welke maatregelen nodig zijn voor ethische implementatie.',
+      type: 'case-study',
+      caseStudy: {
+        company: 'GlobalTech Solutions',
+        background: 'Een multinational met 2000 werknemers wil AI-surveillance implementeren om productiviteit te monitoren. Het systeem analyseert toetsaanslagen, webcam beelden, en e-mail patronen.',
+        challenge: 'Werknemers protesteren tegen invasieve monitoring. De vakbond dreigt met juridische stappen. Management beweert dat dit nodig is voor concurrentievermogen.',
+        outcome: 'Er moet een balans gevonden worden tussen productiviteitsdoelen en werknemersrechten, rekening houdend met privacy-wetgeving en ethische normen.'
+      },
       options: [
-        'Ouderlijke toestemming voor alle data-verwerking',
-        'Leeftijdsgeschikt design van AI-interfaces',
-        'Extra strenge data minimalisatie',
-        'Transparante uitleg over AI-gebruik aan kinderen',
-        'Kinderen kunnen zelf beslissen over hun data',
-        'Bescherming tegen manipulatieve AI-technieken'
+        'Volledige implementatie met opt-out mogelijkheid voor werknemers',
+        'Beperkte monitoring: alleen werkgerelateerde activiteiten tijdens werkuren',
+        'Transparante monitoring met werknemer-inspraak in het ontwerp',
+        'Monitoring alleen voor management en leidinggevenden',
+        'Periodieke monitoring audits door onafhankelijke commissie',
+        'Geaggregeerde team-data in plaats van individuele monitoring',
+        'Complete afwijzing van AI-surveillance systemen'
       ],
-      correctAnswer: ['Ouderlijke toestemming voor alle data-verwerking', 'Leeftijdsgeschikt design van AI-interfaces', 'Extra strenge data minimalisatie', 'Transparante uitleg over AI-gebruik aan kinderen', 'Bescherming tegen manipulatieve AI-technieken'],
-      explanation: 'Kinderen verdienen extra bescherming in AI-systemen: ouderlijke toestemming, leeftijdsgeschikt design, minimale dataverzameling, transparante communicatie en bescherming tegen manipulatie.'
+      correctAnswer: ['Beperkte monitoring: alleen werkgerelateerde activiteiten tijdens werkuren', 'Transparante monitoring met werknemer-inspraak in het ontwerp', 'Periodieke monitoring audits door onafhankelijke commissie', 'Geaggregeerde team-data in plaats van individuele monitoring'],
+      explanation: 'Ethische werkplek-surveillance vereist transparantie, beperkte scope, werknemer-betrokkenheid, en waarborgen tegen misbruik. Volledige surveillance of discriminatoire implementatie zijn ethisch onaanvaardbaar.'
     },
     {
       id: 'ai-misinformation-basic-1',
@@ -481,7 +502,7 @@ const levels: Level[] = [
 interface UserAnswer {
   questionId: string
   answer: string | string[]
-  isCorrect?: boolean
+  isCorrect: boolean
   question: string
   correctAnswer: string | string[]
   explanation: string
@@ -594,9 +615,9 @@ const ExercisePage: React.FC = () => {
     if (currentExercise.type === 'multiple-choice') {
       setSelectedAnswers([answer])
     } else if (currentExercise.type === 'multiple-select') {
-      setSelectedAnswers(prev => 
+      setSelectedAnswers((prev: string[]) => 
         prev.includes(answer) 
-          ? prev.filter(a => a !== answer)
+          ? prev.filter((a: string) => a !== answer)
           : [...prev, answer]
       )
     }
@@ -612,8 +633,9 @@ const ExercisePage: React.FC = () => {
     const isCorrect = currentExercise.type === 'multiple-choice'
       ? selectedAnswers[0] === currentExercise.correctAnswer
       : Array.isArray(currentExercise.correctAnswer) &&
+        currentExercise.correctAnswer &&
         selectedAnswers.length === currentExercise.correctAnswer.length &&
-        selectedAnswers.every(answer => currentExercise.correctAnswer!.includes(answer))
+        selectedAnswers.every((answer: string) => (currentExercise.correctAnswer as string[]).includes(answer))
 
     const userAnswer: UserAnswer = {
       questionId: currentExercise.id,
@@ -625,10 +647,10 @@ const ExercisePage: React.FC = () => {
       userSelectedAnswers: [...selectedAnswers]
     }
 
-    setUserAnswers(prev => [...prev, userAnswer])
+    setUserAnswers((prev: UserAnswer[]) => [...prev, userAnswer])
 
     if (isCorrect) {
-      setScore(prev => prev + 1)
+      setScore((prev: number) => prev + 1)
     }
 
     // Move to next exercise immediately without showing feedback
@@ -636,7 +658,7 @@ const ExercisePage: React.FC = () => {
     
     setTimeout(() => {
       if (currentExerciseIndex < levelExercises.length - 1) {
-        setCurrentExerciseIndex(prev => prev + 1)
+        setCurrentExerciseIndex((prev: number) => prev + 1)
       } else {
         setIsCompleted(true)
       }
@@ -690,7 +712,7 @@ const ExercisePage: React.FC = () => {
           {/* Detailed feedback for each question */}
           <div className="detailed-feedback">
             <h3>Uitgebreide Feedback</h3>
-            {userAnswers.map((answer, index) => {
+            {userAnswers.map((answer: UserAnswer, index: number) => {
               const exercise = levelExercises.find(ex => ex.id === answer.questionId)
               if (!exercise) return null
               
@@ -709,7 +731,7 @@ const ExercisePage: React.FC = () => {
                     <div className="user-answer">
                       <strong>Jouw antwoord:</strong>
                       <ul>
-                        {answer.userSelectedAnswers.map((selectedAnswer, idx) => (
+                        {answer.userSelectedAnswers.map((selectedAnswer: string, idx: number) => (
                           <li key={idx} className="user-selected">{selectedAnswer}</li>
                         ))}
                       </ul>
@@ -719,7 +741,7 @@ const ExercisePage: React.FC = () => {
                       <strong>Juiste antwoord{Array.isArray(answer.correctAnswer) && answer.correctAnswer.length > 1 ? 'en' : ''}:</strong>
                       <ul>
                         {Array.isArray(answer.correctAnswer) ? (
-                          answer.correctAnswer.map((correctAns, idx) => (
+                          answer.correctAnswer.map((correctAns: string, idx: number) => (
                             <li key={idx} className="correct-option">{correctAns}</li>
                           ))
                         ) : (

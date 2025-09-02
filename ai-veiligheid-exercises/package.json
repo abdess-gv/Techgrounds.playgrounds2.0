@@ -8,7 +8,9 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "build:gh-pages": "tsc && vite build --base=/Techgrounds.playgrounds2.0/",
-    "deploy": "npm run build:gh-pages"
+    "deploy": "npm run build:gh-pages",
+    "debug": "node debug-script.js",
+    "test:quiz": "npm run debug"
   },
   "devDependencies": {
     "typescript": "~5.8.3",
