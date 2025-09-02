@@ -604,6 +604,10 @@ const ExercisePage: React.FC = () => {
 
   const submitAnswer = () => {
     if (selectedAnswers.length === 0) return
+    if (!currentExercise.correctAnswer) {
+      console.error('No correct answer defined for exercise:', currentExercise.id)
+      return
+    }
 
     const isCorrect = currentExercise.type === 'multiple-choice'
       ? selectedAnswers[0] === currentExercise.correctAnswer
@@ -861,7 +865,7 @@ const ExercisePage: React.FC = () => {
             <button 
               className="btn btn-primary"
               onClick={submitAnswer}
-              disabled={selectedAnswers.length === 0}
+              disabled={selectedAnswers.length === 0 || !currentExercise.correctAnswer}
             >
               {currentExerciseIndex < levelExercises.length - 1 ? 'Volgende Vraag' : 'Beëindig Quiz'}
             </button>

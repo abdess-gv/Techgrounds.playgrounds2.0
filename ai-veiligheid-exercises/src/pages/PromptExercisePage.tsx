@@ -425,6 +425,10 @@ const PromptExercisePage: React.FC = () => {
 
   const submitAnswer = () => {
     if (selectedAnswers.length === 0) return
+    if (!currentExercise.correctAnswer) {
+      console.error('No correct answer defined for exercise:', currentExercise.id)
+      return
+    }
 
     const isCorrect = currentExercise.type === 'multiple-choice'
       ? selectedAnswers[0] === currentExercise.correctAnswer
@@ -437,7 +441,7 @@ const PromptExercisePage: React.FC = () => {
       answer: currentExercise.type === 'multiple-choice' ? selectedAnswers[0] : selectedAnswers,
       isCorrect,
       question: currentExercise.question,
-      correctAnswer: currentExercise.correctAnswer!,
+      correctAnswer: currentExercise.correctAnswer,
       explanation: currentExercise.explanation,
       userSelectedAnswers: [...selectedAnswers]
     }
@@ -643,7 +647,7 @@ const PromptExercisePage: React.FC = () => {
             <button 
               className="btn btn-primary"
               onClick={submitAnswer}
-              disabled={selectedAnswers.length === 0}
+              disabled={selectedAnswers.length === 0 || !currentExercise.correctAnswer}
             >
               {currentExerciseIndex < levelExercises.length - 1 ? 'Volgende Vraag' : 'Beëindig Quiz'}
             </button>
