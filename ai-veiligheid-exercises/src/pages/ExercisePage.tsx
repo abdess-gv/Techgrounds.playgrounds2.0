@@ -613,7 +613,7 @@ const ExercisePage: React.FC = () => {
       ? selectedAnswers[0] === currentExercise.correctAnswer
       : Array.isArray(currentExercise.correctAnswer) &&
         selectedAnswers.length === currentExercise.correctAnswer.length &&
-        selectedAnswers.every(answer => currentExercise.correctAnswer.includes(answer))
+        selectedAnswers.every(answer => currentExercise.correctAnswer!.includes(answer))
 
     const userAnswer: UserAnswer = {
       questionId: currentExercise.id,
