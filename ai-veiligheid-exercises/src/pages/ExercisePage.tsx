@@ -151,26 +151,20 @@ const exercises: ExerciseSet = {
     },
     {
       id: 'ai-workplace-surveillance-1',
-      title: 'AI Werkplek Surveillance - Case Study',
-      question: 'Analyseer deze situatie en bepaal welke maatregelen nodig zijn voor ethische implementatie.',
-      type: 'case-study',
-      caseStudy: {
-        company: 'GlobalTech Solutions',
-        background: 'Een multinational met 2000 werknemers wil AI-surveillance implementeren om productiviteit te monitoren. Het systeem analyseert toetsaanslagen, webcam beelden, en e-mail patronen.',
-        challenge: 'Werknemers protesteren tegen invasieve monitoring. De vakbond dreigt met juridische stappen. Management beweert dat dit nodig is voor concurrentievermogen.',
-        outcome: 'Er moet een balans gevonden worden tussen productiviteitsdoelen en werknemersrechten, rekening houdend met privacy-wetgeving en ethische normen.'
-      },
+      title: 'AI Werkplek Surveillance',
+      question: 'Een bedrijf overweegt AI-surveillance op de werkplek. Welke ethische principes moeten worden toegepast?',
+      type: 'multiple-select',
       options: [
-        'Volledige implementatie met opt-out mogelijkheid voor werknemers',
-        'Beperkte monitoring: alleen werkgerelateerde activiteiten tijdens werkuren',
-        'Transparante monitoring met werknemer-inspraak in het ontwerp',
-        'Monitoring alleen voor management en leidinggevenden',
-        'Periodieke monitoring audits door onafhankelijke commissie',
-        'Geaggregeerde team-data in plaats van individuele monitoring',
-        'Complete afwijzing van AI-surveillance systemen'
+        'Transparantie naar werknemers over wat wordt gemonitord',
+        'Beperkte monitoring alleen tijdens werkuren',
+        'Werknemer-inspraak in het ontwerp van het systeem',
+        'Periodieke audits door onafhankelijke commissie',
+        'Geaggregeerde data in plaats van individuele tracking',
+        'Volledige surveillance zonder beperkingen',
+        'Monitoring van alle persoonlijke communicatie'
       ],
-      correctAnswer: ['Beperkte monitoring: alleen werkgerelateerde activiteiten tijdens werkuren', 'Transparante monitoring met werknemer-inspraak in het ontwerp', 'Periodieke monitoring audits door onafhankelijke commissie', 'Geaggregeerde team-data in plaats van individuele monitoring'],
-      explanation: 'Ethische werkplek-surveillance vereist transparantie, beperkte scope, werknemer-betrokkenheid, en waarborgen tegen misbruik. Volledige surveillance of discriminatoire implementatie zijn ethisch onaanvaardbaar.'
+      correctAnswer: ['Transparantie naar werknemers over wat wordt gemonitord', 'Beperkte monitoring alleen tijdens werkuren', 'Werknemer-inspraak in het ontwerp van het systeem', 'Periodieke audits door onafhankelijke commissie', 'Geaggregeerde data in plaats van individuele tracking'],
+      explanation: 'Ethische werkplek-surveillance vereist transparantie, beperkte scope, werknemer-betrokkenheid, en waarborgen tegen misbruik. Volledige surveillance of monitoring van persoonlijke communicatie zijn ethisch onaanvaardbaar.'
     },
     {
       id: 'ai-misinformation-basic-1',
@@ -191,24 +185,19 @@ const exercises: ExerciseSet = {
     {
       id: 'workplace-ai-basic-1',
       title: 'AI op de Werkplek - Ethische Basisregels',
-      question: 'Je werkgever introduceert AI-tools voor productiviteit. Welke ethische overwegingen zijn belangrijk?',
-      type: 'case-study',
-      caseStudy: {
-        company: 'TechCorp',
-        background: 'Een middelgroot technologiebedrijf implementeert AI-tools voor emailfiltering, vergadersamenvattingen en documentcreatie.',
-        challenge: 'Werknemers maken zich zorgen over privacy, baanzekerheid en transparantie.',
-        outcome: 'Het bedrijf moet balans vinden tussen efficiëntie en werknemersrechten.'
-      },
+      question: 'Je werkgever introduceert nieuwe AI-tools voor productiviteit. Welke ethische overwegingen zijn belangrijk?',
+      type: 'multiple-select',
       options: [
         'Transparantie over welke AI-tools worden gebruikt',
         'Training aanbieden voor nieuwe AI-tools',
-        'Duidelijke richtlijnen voor AI-gebruik',
-        'AI-tools implementeren zonder overleg',
+        'Duidelijke richtlijnen voor AI-gebruik opstellen',
         'Privacy impact assessment uitvoeren',
-        'Feedback mechanismen voor werknemers instellen'
+        'Feedback mechanismen voor werknemers instellen',
+        'AI-tools implementeren zonder overleg met werknemers',
+        'Alle werknemersdata automatisch gebruiken voor AI-training'
       ],
-      correctAnswer: ['Transparantie over welke AI-tools worden gebruikt', 'Training aanbieden voor nieuwe AI-tools', 'Duidelijke richtlijnen voor AI-gebruik', 'Privacy impact assessment uitvoeren', 'Feedback mechanismen voor werknemers instellen'],
-      explanation: 'Ethische AI-implementatie op de werkplek vereist transparantie, training, duidelijke richtlijnen, privacy bescherming en werknemersparticipatie. Implementatie zonder overleg ondermijnt vertrouwen.'
+      correctAnswer: ['Transparantie over welke AI-tools worden gebruikt', 'Training aanbieden voor nieuwe AI-tools', 'Duidelijke richtlijnen voor AI-gebruik opstellen', 'Privacy impact assessment uitvoeren', 'Feedback mechanismen voor werknemers instellen'],
+      explanation: 'Ethische AI-implementatie op de werkplek vereist transparantie, training, duidelijke richtlijnen, privacy bescherming en werknemersparticipatie. Implementatie zonder overleg of automatisch datagebruik ondermijnt vertrouwen en privacy.'
     }
   ],
   intermediate: [

@@ -144,7 +144,7 @@ const HomePage: React.FC = () => {
 
       <footer className="build-info">
         <div className="build-number">
-          Build 6
+          Build 7
         </div>
       </footer>
     </div>
